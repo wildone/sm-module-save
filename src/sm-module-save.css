@@ -1,0 +1,63 @@
+/**
+ * Config
+ */
+:root {
+
+  --icon-size: 21px;
+
+}
+
+:host {
+  @apply(--typography);
+  z-index: var(--z-index);
+  display: inline-block;
+}
+
+.controls {
+  position: relative;
+  display: inline-flex;
+  background: var(--blue);
+  color: white;
+  border-radius: var(--border-radius);
+  z-index: 1;
+}
+
+.controls__save {
+  padding: 0 1.5em;
+  font-weight: 600;
+}
+
+.controls__menu {
+  width: var(--tool-size);
+  border-left: 1px solid var(--light-white);
+}
+
+.menu {
+  background: white;
+
+  /* Box shadow offset */
+  width: calc(100% - 1px);
+
+  /* Border + bounce offset */
+  padding-top: 10px;
+  margin: -10px auto 0;
+
+  /* Polymer custom props can't handle shorthand */
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+
+  overflow: hidden;
+  transform: translateY(-100%);
+  display: none;
+}
+
+.menu[visible] {
+  display: block;
+  box-shadow: 0 0 1px var(--light-black);
+}
+
+.menu__item {
+  list-style: none;
+  padding: 0 15px;
+  color: var(--text-color);
+}

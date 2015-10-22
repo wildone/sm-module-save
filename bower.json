@@ -1,0 +1,37 @@
+{
+  "name": "sm-module-save",
+  "description": "Global save control for Simpla",
+  "version": "0.1.0",
+  "authors": [
+    "Simpla <admin@simpla.io>"
+  ],
+  "license": "MIT",
+  "main": "sm-module-save.html",
+  "keywords": [
+    "simpla",
+    "web component",
+    "polymer",
+    "save"
+  ],
+  "ignore": [
+    "*",
+    "!src/**/*",
+    "!sm-module-save.html",
+    "!LICENSE"
+  ],
+  "dependencies": {
+    "webcomponentsjs": "^0.7.14",
+    "polymer": "^1.1.4",
+    "simpla": "git@github.com:simplaio/simpla.git",
+    "sm-helper-button": "git@github.com:simplaio/sm-helper-button.git"
+  },
+  "devDependencies": {
+    "web-component-tester": "^3.3.22",
+    "test-fixture": "PolymerElements/test-fixture#~1.0.0"
+  },
+  "componentImports": [
+    "polymer/polymer.html",
+    "simpla/simpla.html",
+    "sm-helper-button/sm-helper-button.html"
+  ]
+}
