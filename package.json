@@ -1,6 +1,6 @@
 {
   "name": "sm-module-save",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Global save control for Simpla",
   "main": "sm-module-save.html",
   "scripts": {
