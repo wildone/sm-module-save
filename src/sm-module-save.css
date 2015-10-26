@@ -27,6 +27,10 @@
   font-weight: 600;
 }
 
+.controls__save[busy] {
+  color: var(--med-white);
+}
+
 .controls__menu {
   width: var(--tool-size);
   border-left: 1px solid var(--light-white);
