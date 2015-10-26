@@ -5,8 +5,14 @@ class SmModuleSave {
     this.is = 'sm-module-save';
 
     this.properties = {
-      menuActive: Boolean
-    }
+      menuActive: Boolean,
+      busy: Boolean
+    };
+
+    this.listeners = {
+      'saving': '_beBusy',
+      'saved': '_dontBeBusy'
+    };
   }
 
   get behaviors() {
@@ -18,6 +24,8 @@ class SmModuleSave {
   save() {
     let leftToSave = 0,
         haveTriedAll = false;
+
+    this.fire('saving');
 
     simpla.elements.forEach(element => {
       let willSave,
@@ -41,6 +49,14 @@ class SmModuleSave {
     });
 
     haveTriedAll = true;
+  }
+
+  _beBusy() {
+    this.busy = true;
+  }
+
+  _dontBeBusy() {
+    this.busy = false;
   }
 }
 

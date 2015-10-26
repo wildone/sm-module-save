@@ -77,6 +77,16 @@
 
             expect(listener.called).to.be.true;
           });
+
+          it('should be busy while saving', function() {
+            expect(component.busy).to.not.be.true;
+
+            component.save();
+            expect(component.busy).to.be.true;
+
+            component.fire('saved');
+            expect(component.busy).to.be.false;
+          });
         });
       });
     </script>
