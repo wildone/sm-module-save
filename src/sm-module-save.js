@@ -6,7 +6,14 @@ class SmModuleSave {
 
     this.properties = {
       menuActive: Boolean,
-      busy: Boolean
+
+      busy: Boolean,
+
+      menuIcon: {
+        type: String,
+        computed: '_computeMenuIcon(menuActive)',
+        value: 'simpla:arrow-down'
+      }
     };
 
     this.listeners = {
@@ -53,6 +60,23 @@ class SmModuleSave {
 
   logout() {
     this.$.auth.logout();
+  }
+
+  _menuOpenClose() {
+    this.menuActive = !this.menuActive;
+  }
+
+
+  _computeMenuIcon(menuActive) {
+    let icon;
+
+    if (menuActive) {
+      icon = 'simpla:arrow-up'
+    } else {
+      icon = 'simpla:arrow-down'
+    }
+
+    return icon;
   }
 
   _beBusy() {

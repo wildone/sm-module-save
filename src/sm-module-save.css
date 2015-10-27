@@ -63,5 +63,7 @@
 .menu__item {
   list-style: none;
   padding: 0 15px;
-  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-gray);
 }
