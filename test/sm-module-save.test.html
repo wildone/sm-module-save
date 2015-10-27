@@ -33,6 +33,61 @@
         it('is okay', function() {
           expect(component).to.be.ok;
         });
+
+        describe('saving', function() {
+          var makeMockElement = function(returns) {
+            var el = document.createElement('div');
+            el.save = sinon.stub().returns(returns);
+            el._save = returns;
+
+            return el;
+          };
+
+          beforeEach(function() {
+            simpla.elements = [
+              makeMockElement(false),
+              makeMockElement(true),
+              makeMockElement(false),
+              makeMockElement(true),
+              makeMockElement(true)
+            ];
+          });
+
+          it('should call save on each element', function() {
+            component.save();
+
+            simpla.elements.forEach(function(el) {
+              expect(el.save.called).to.be.true;
+            });
+          });
+
+          it('should emit "saved" once all elements have finished saving', function() {
+            var listener = sinon.stub();
+
+            component.addEventListener('saved', listener);
+
+            component.save();
+
+            simpla.elements
+              .filter(function(el) { return el._save; })
+              .forEach(function(el) {
+                expect(listener.called).to.be.false;
+                el.dispatchEvent(new Event('saved'));
+              });
+
+            expect(listener.called).to.be.true;
+          });
+
+          it('should be busy while saving', function() {
+            expect(component.busy).to.not.be.true;
+
+            component.save();
+            expect(component.busy).to.be.true;
+
+            component.fire('saved');
+            expect(component.busy).to.be.false;
+          });
+        });
       });
     </script>
   </body>
