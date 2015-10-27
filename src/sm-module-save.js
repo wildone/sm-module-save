@@ -55,6 +55,10 @@ class SmModuleSave {
     this.$.auth.logout();
   }
 
+  _menuOpenClose() {
+    this.menuActive = !this.menuActive;
+  }
+
   _beBusy() {
     this.busy = true;
   }

@@ -94,6 +94,15 @@
           component.$.logout.click();
           expect(component.$.auth.logout.called).to.be.true;
         });
+
+        it('should toggle the menu on _menuOpenClose', function() {
+          component.menuActive = true;
+          component._menuOpenClose();
+          expect(component.menuActive).to.be.false;
+
+          component._menuOpenClose();
+          expect(component.menuActive).to.be.true;
+        });
       });
     </script>
   </body>
