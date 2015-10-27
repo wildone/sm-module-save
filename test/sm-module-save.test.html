@@ -87,6 +87,58 @@
             component.fire('saved');
             expect(component.busy).to.be.false;
           });
+
+          describe('failure', function() {
+            var all,
+                listeners;
+
+            beforeEach(function() {
+              listeners = {
+                saved: function() {},
+                failed: function(event) {
+                 expect(event.detail.all).to.equal(all, 'Failure was fired with all set to ' + all);
+                }
+              };
+
+              sinon.spy(listeners, 'saved');
+              sinon.spy(listeners, 'failed');
+
+              component.addEventListener('saved', listeners.saved);
+              component.addEventListener('save-failed', listeners.failed);
+            });
+
+            it('should notify failed if all elements failed', function() {
+              all = true;
+
+              component.save();
+              simpla.elements
+                .filter(function(el) { return el._save; })
+                .forEach(function(el) {
+                  el.dispatchEvent(new Event('error'));
+                });
+
+              expect(listeners.saved.called).to.be.false;
+              expect(listeners.failed.called).to.be.true;
+            });
+
+            it('should notify failed if some elements failed', function() {
+              all = false;
+
+              component.save();
+              simpla.elements
+                .filter(function(el) { return el._save; })
+                .forEach(function(el, index) {
+                  if (index % 2 === 0) {
+                    el.dispatchEvent(new Event('error'));
+                  } else {
+                    el.dispatchEvent(new Event('saved'));
+                  }
+                });
+
+              expect(listeners.saved.called).to.be.false;
+              expect(listeners.failed.called).to.be.true;
+            });
+          });
         });
 
         it('should logout when clicking logout', function() {

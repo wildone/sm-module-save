@@ -30,28 +30,51 @@ class SmModuleSave {
 
   save() {
     let leftToSave = 0,
-        haveTriedAll = false;
+        successfulSaves = 0,
+        failedSaves = 0,
+        haveTriedAll = false,
+        finished;
 
     this.fire('saving');
 
-    simpla.elements.forEach(element => {
-      let willSave,
-          saved;
+    finished = () => {
+      if (failedSaves === 0) {
+        this.fire('saved');
+      } else {
+        this.fire('save-failed', { all: successfulSaves === 0 });
+      }
+    };
 
-      saved = () => {
+    simpla.elements.forEach(element => {
+      let addElement,
+          removeElement,
+          saved = () => removeElement(true),
+          failed = () => removeElement(false);
+
+      addElement = function() {
+        leftToSave++;
+        element.addEventListener('saved', saved);
+        element.addEventListener('error', failed);
+      };
+
+      removeElement = function(success) {
         leftToSave--;
         element.removeEventListener('saved', saved);
+        element.removeEventListener('error', failed);
+
+        if (success) {
+          successfulSaves++;
+        } else {
+          failedSaves++;
+        }
 
         if (leftToSave === 0 && haveTriedAll) {
-          this.fire('saved');
+          finished();
         }
       };
 
-      willSave = element.save();
-
-      if (willSave) {
-        leftToSave++;
-        element.addEventListener('saved', saved);
+      if (element.save()) {
+        addElement();
       }
     });
 
