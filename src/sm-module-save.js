@@ -51,6 +51,10 @@ class SmModuleSave {
     haveTriedAll = true;
   }
 
+  logout() {
+    this.$.auth.logout();
+  }
+
   _beBusy() {
     this.busy = true;
   }

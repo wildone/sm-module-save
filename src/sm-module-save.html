@@ -9,8 +9,10 @@
     </div>
 
     <ul class="menu" id="menu">
-      <li id="logout" class="menu__item"><sm-helper-button>Logout</sm-helper-button></li>
+      <li id="logout" on-tap="logout" class="menu__item"><sm-helper-button>Logout</sm-helper-button></li>
     </ul>
+
+    <sm-connect-auth id="auth"></sm-connect-auth>
 
   </template>
   <script src="./sm-module-save.js"></script>

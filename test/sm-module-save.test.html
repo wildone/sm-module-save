@@ -88,6 +88,12 @@
             expect(component.busy).to.be.false;
           });
         });
+
+        it('should logout when clicking logout', function() {
+          sinon.stub(component.$.auth, 'logout');
+          component.$.logout.click();
+          expect(component.$.auth.logout.called).to.be.true;
+        });
       });
     </script>
   </body>
