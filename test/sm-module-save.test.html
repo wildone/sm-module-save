@@ -155,6 +155,24 @@
           component._menuOpenClose();
           expect(component.menuActive).to.be.true;
         });
+
+        describe('notifications', function() {
+          beforeEach(function() {
+            simpla.notifications = {
+              notify: sinon.stub()
+            };
+          });
+
+          it('should notify on saved', function() {
+            component.fire('saved');
+            expect(simpla.notifications.notify.called).to.be.true;
+          });
+
+          it('should notify on saved', function() {
+            component.fire('save-failed', { all: true });
+            expect(simpla.notifications.notify.called).to.be.true;
+          });
+        });
       });
     </script>
   </body>
