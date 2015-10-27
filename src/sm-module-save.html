@@ -5,11 +5,11 @@
 
     <div class="controls">
       <sm-helper-button on-tap="save" busy="[[busy]]" class="controls__save">save</sm-helper-button>
-      <sm-helper-button on-tap="_menuOpenClose" class="controls__menu" icon="simpla:arrow-down"></sm-helper-button>
+      <sm-helper-button on-tap="_menuOpenClose" class="controls__menu" icon="[[menuIcon]]"></sm-helper-button>
     </div>
 
     <ul class="menu" id="menu">
-      <li id="logout" on-tap="logout" class="menu__item"><sm-helper-button>Logout</sm-helper-button></li>
+      <li id="logout" on-tap="logout" class="menu__item"><sm-helper-button icon="simpla:exit">Logout</sm-helper-button></li>
     </ul>
 
     <sm-connect-auth id="auth"></sm-connect-auth>
