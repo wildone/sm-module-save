@@ -14,7 +14,7 @@ const SUCCESS = 'success',
 
 function getNotifier() {
   if (simpla.notifications) {
-    return simpla.notifications.notify;
+    return simpla.notifications.notify.bind(simpla.notifications);
   }
 
   return function(type, title, message) {
@@ -39,6 +39,6 @@ export default {
 
   _notify(type) {
     const notify = getNotifier();
-    notify(type, TITLES[type], MESSAGES[type]);
+    notify(type, MESSAGES[type], TITLES[type]);
   }
 }
