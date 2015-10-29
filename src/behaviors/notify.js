@@ -2,13 +2,13 @@ const SUCCESS = 'success',
       WARN = 'warning',
       ERROR = 'error',
       MESSAGES = {
-        [ ERROR ]: 'Oh no! Something went wrong, make sure your connection is fine and try again',
-        [ WARN ]: 'Some of the elements did not save, please check your content and try again',
-        [ SUCCESS ]: 'All done!'
+        [ ERROR ]: 'Oh no! Something went wrong, check your internet connection and try again',
+        [ WARN ]: 'Looks like some things didn\'t save properly. Check your content and try again',
+        [ SUCCESS ]: 'Hooray! Your changes are published'
       },
       TITLES = {
         [ ERROR ]: 'Save Failed',
-        [ WARN ]: 'Save Issues',
+        [ WARN ]: 'Uhhhh',
         [ SUCCESS ]: 'Saved'
       };
 
