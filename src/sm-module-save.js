@@ -1,4 +1,5 @@
 import menu from './behaviors/menu';
+import notify from './behaviors/notify';
 
 class SmModuleSave {
   beforeRegister() {
@@ -24,7 +25,8 @@ class SmModuleSave {
 
   get behaviors() {
     return [
-      menu
+      menu,
+      notify
     ];
   }
 
