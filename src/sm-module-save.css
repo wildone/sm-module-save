@@ -11,14 +11,17 @@
   @apply(--typography);
   z-index: var(--z-index);
   display: inline-block;
+  overflow: hidden;
+  border-radius: var(--border-radius);
 }
 
 .controls {
   position: relative;
   display: inline-flex;
   background: var(--blue);
-  color: white;
   border-radius: var(--border-radius);
+  overflow: hidden;
+  color: white;
   z-index: 1;
 }
 
