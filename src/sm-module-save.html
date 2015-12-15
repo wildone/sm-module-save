@@ -4,12 +4,12 @@
     <link rel="stylesheet" href="./sm-module-save.css" />
 
     <div class="controls">
-      <sm-helper-button on-tap="save" busy="[[busy]]" class="controls__save">save</sm-helper-button>
-      <sm-helper-button on-tap="_menuOpenClose" class="controls__menu" icon="[[menuIcon]]"></sm-helper-button>
+      <sm-ui-button on-tap="save" busy="[[busy]]" class="controls__save">save</sm-ui-button>
+      <sm-ui-button on-tap="_menuOpenClose" class="controls__menu" icon="[[menuIcon]]"></sm-ui-button>
     </div>
 
     <ul class="menu" id="menu">
-      <li id="logout" on-tap="logout" class="menu__item"><sm-helper-button icon="simpla:exit">Logout</sm-helper-button></li>
+      <li id="logout" on-tap="logout" class="menu__item"><sm-ui-button icon="simpla:exit">Logout</sm-ui-button></li>
     </ul>
 
     <sm-connect-auth id="auth"></sm-connect-auth>
