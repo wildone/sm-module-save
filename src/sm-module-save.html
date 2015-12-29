@@ -1,16 +1,18 @@
 <dom-module id="sm-module-save">
   <template>
     <style include="sm-css"></style>
-    <link rel="stylesheet" href="./sm-module-save.css" />
+    <link rel="stylesheet" href="./sm-module-save.css" inline>
 
     <div class="controls">
       <sm-ui-button on-tap="save" busy="[[busy]]" class="controls__save">save</sm-ui-button>
-      <sm-ui-button on-tap="_menuOpenClose" class="controls__menu" icon="[[menuIcon]]"></sm-ui-button>
+      <sm-ui-button on-tap="toggleMenu" class="controls__menu" icon="[[_menuIcon]]"></sm-ui-button>
     </div>
 
-    <ul class="menu" id="menu">
-      <li id="logout" on-tap="logout" class="menu__item"><sm-ui-button icon="simpla:exit">Logout</sm-ui-button></li>
-    </ul>
+    <div class="menu" id="menu">
+      <template is="dom-repeat" items="[[menu]]">
+        <sm-ui-button id="[[item.id]]" class="menu__item" icon="[[item.icon]]" on-tap="[[item.onTap]]">[[item.text]]</sm-ui-button>
+      </template>
+    </div>
 
     <sm-utility-auth id="auth"></sm-utility-auth>
 

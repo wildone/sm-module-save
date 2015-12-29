@@ -8,6 +8,16 @@
     <link rel="import" href="../sm-module-save.html" />
   </head>
   <body style="background: gray; padding: 80px;">
+
     <sm-module-save></sm-module-save>
+
+    <script>
+      var save = document.querySelector('sm-module-save');
+
+      save.menu = [
+        { id: 'logout', text: 'Logout', icon: 'simpla:exit', onTap: '_logout' }
+      ];
+    </script>
+
   </body>
 </html>

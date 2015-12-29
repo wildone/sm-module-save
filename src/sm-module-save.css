@@ -1,18 +1,9 @@
-/**
- * Config
- */
-:root {
-
-  --icon-size: 21px;
-
-}
-
 :host {
   @apply(--typography);
-  z-index: var(--z-index);
   display: inline-block;
   overflow: hidden;
   border-radius: var(--border-radius);
+  z-index: var(--on-top);
 }
 
 .controls {
@@ -35,38 +26,29 @@
 }
 
 .controls__menu {
+  --icon-size: 21px;
   width: var(--tool-size);
   border-left: 1px solid var(--light-white);
 }
 
 .menu {
   background: white;
-
-  /* Box shadow offset */
-  width: calc(100% - 1px);
-
-  /* Border + bounce offset */
-  padding-top: 10px;
-  margin: -10px auto 0;
-
+  box-shadow: 0 1px 1px var(--light-black);
+  overflow: hidden;
   /* Polymer custom props can't handle shorthand */
   border-bottom-left-radius: var(--border-radius);
   border-bottom-right-radius: var(--border-radius);
 
-  overflow: hidden;
-  transform: translateY(-100%);
   display: none;
 }
 
 .menu[visible] {
-  display: block;
-  box-shadow: 0 1px 1px var(--light-black);
+  display: block
 }
 
 .menu__item {
-  list-style: none;
-  padding: 0 15px;
   font-size: 14px;
+  padding: 0 15px;
   font-weight: 600;
   color: var(--dark-gray);
 }
