@@ -71,7 +71,7 @@ export default {
     let menu = this.$.menu,
         animation;
 
-    animation = menu.animate(ANIMATION.frames.reverse(), ANIMATION.opts);
+    animation = menu.animate(ANIMATION.frames.slice().reverse(), ANIMATION.opts);
     animation.onfinish = () => {
       this.toggleAttribute('visible', false, menu);
     }
