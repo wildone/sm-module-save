@@ -165,6 +165,22 @@
           expect(component._menuActive).to.be.true;
         });
 
+        it('should call onTap functions on item tap', function() {
+          // Add dummy item
+          component.menu = [
+            { id: 'foo', text: 'Foo', icon: 'simpla:exit', onTap: '_foo' }
+          ];
+
+          // Force rerender of dom-repeat
+          component.$$('#menu template').render();
+
+          // Add dummy function to check it being called
+          component._foo = sinon.spy();
+
+          component.$$('#foo').click();
+          expect(component._foo.called).to.be.true;
+        });
+
         describe('notifications', function() {
           beforeEach(function() {
             simpla.notifications = {

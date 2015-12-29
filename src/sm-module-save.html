@@ -10,7 +10,7 @@
 
     <div class="menu" id="menu">
       <template is="dom-repeat" items="[[menu]]">
-        <sm-ui-button id="[[item.id]]" class="menu__item" icon="[[item.icon]]" on-tap="[[item.onTap]]">[[item.text]]</sm-ui-button>
+        <sm-ui-button id="[[item.id]]" class="menu__item" icon="[[item.icon]]" on-tap="_menuItemTap">[[item.text]]</sm-ui-button>
       </template>
     </div>
 

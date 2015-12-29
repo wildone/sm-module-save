@@ -101,4 +101,17 @@ export default {
     this.$.auth.logout();
   },
 
+  /**
+   * Handle menu item taps
+   * @param  {CustomEvent} event Takes model property from event to get name of
+   *                             	tap handler
+   * @return undefined
+   */
+  _menuItemTap(event) {
+    let model = event.model;
+
+    if (model && typeof this[model.item.onTap] === 'function') {
+      this[model.item.onTap](event);
+    }
+  }
 };
