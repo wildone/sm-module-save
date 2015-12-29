@@ -6,20 +6,18 @@ class SmModuleSave {
     this.is = 'sm-module-save';
 
     this.properties = {
-      menuActive: Boolean,
 
+      // Show button as busy
+      // while saving
       busy: Boolean,
 
-      menuIcon: {
-        type: String,
-        computed: '_computeMenuIcon(menuActive)',
-        value: 'simpla:arrow-down'
-      }
     };
 
+    // Listen for save events
+    // to enter and exit busy
     this.listeners = {
       'saving': '_beBusy',
-      'saved': '_dontBeBusy'
+      'saved': '_stopBusy'
     };
   }
 
@@ -30,6 +28,10 @@ class SmModuleSave {
     ];
   }
 
+  /**
+   * Tell Simpla elements to save their data
+   * @return undefined
+   */
   save() {
     let leftToSave = 0,
         successfulSaves = 0,
@@ -83,32 +85,19 @@ class SmModuleSave {
     haveTriedAll = true;
   }
 
-  logout() {
-    this.$.auth.logout();
-  }
-
-  _menuOpenClose() {
-    this.menuActive = !this.menuActive;
-  }
-
-
-  _computeMenuIcon(menuActive) {
-    let icon;
-
-    if (menuActive) {
-      icon = 'simpla:arrow-up'
-    } else {
-      icon = 'simpla:arrow-down'
-    }
-
-    return icon;
-  }
-
+  /**
+   * Trigger button busy state true
+   * @return undefined
+   */
   _beBusy() {
     this.busy = true;
   }
 
-  _dontBeBusy() {
+  /**
+   * Trigger button busy state false
+   * @return undefined
+   */
+  _stopBusy() {
     this.busy = false;
   }
 }
