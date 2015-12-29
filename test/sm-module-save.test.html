@@ -143,17 +143,17 @@
 
         it('should logout when clicking logout', function() {
           sinon.stub(component.$.auth, 'logout');
-          component.$.logout.click();
+          component.$$('#logout').click();
           expect(component.$.auth.logout.called).to.be.true;
         });
 
         it('should toggle the menu on _menuOpenClose', function() {
-          component.menuActive = true;
-          component._menuOpenClose();
-          expect(component.menuActive).to.be.false;
+          component._menuActive = true;
+          component.toggleMenu();
+          expect(component._menuActive).to.be.false;
 
-          component._menuOpenClose();
-          expect(component.menuActive).to.be.true;
+          component.toggleMenu();
+          expect(component._menuActive).to.be.true;
         });
 
         describe('notifications', function() {
