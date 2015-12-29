@@ -142,7 +142,16 @@
         });
 
         it('should logout when clicking logout', function() {
+          // Add logout item
+          component.menu = [
+            { id: 'logout', text: 'Logout', icon: 'simpla:exit', onTap: '_logout' }
+          ];
+
+          // Force rerender of dom-repeat
+          component.$$('#menu template').render();
+
           sinon.stub(component.$.auth, 'logout');
+
           component.$$('#logout').click();
           expect(component.$.auth.logout.called).to.be.true;
         });
