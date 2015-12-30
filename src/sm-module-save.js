@@ -41,6 +41,10 @@ class SmModuleSave {
 
     this.fire('saving');
 
+    /**
+     * Fires saved, if there were no fails, otherwise fires save-failed
+     * @return {[type]} [description]
+     */
     finished = () => {
       if (failedSaves === 0) {
         this.fire('saved');
@@ -49,19 +53,33 @@ class SmModuleSave {
       }
     };
 
+    // For each element, make a save request, then keep track of the successes
+    //  of these requests, emited saved or save-failed once all requests have
+    //  come back, and the success of them is known
     simpla.elements.forEach(element => {
       let addElement,
           removeElement,
           saved = () => removeElement(true),
           failed = () => removeElement(false);
 
+      /**
+       * Add the element, then listen for a saved or errored event
+       * @return {undefined}
+       */
       addElement = function() {
+        // Add listeners and incremement leftToSave
         leftToSave++;
         element.addEventListener('saved', saved);
         element.addEventListener('error', failed);
       };
 
+      /**
+       * Removes the element i.e. the save request was completed, successful or not
+       * @param  {Boolean} success If the save was successful or not
+       * @return {undefined}
+       */
       removeElement = function(success) {
+        // Done with the element, remove listeners and decrement leftToSave
         leftToSave--;
         element.removeEventListener('saved', saved);
         element.removeEventListener('error', failed);
@@ -72,11 +90,14 @@ class SmModuleSave {
           failedSaves++;
         }
 
+        // If it's not waiting on any more saves, and save requests have been
+        //  made on all, call finished.
         if (leftToSave === 0 && haveTriedAll) {
           finished();
         }
       };
 
+      // Only add the element if the save request actually occurs
       if (element.save()) {
         addElement();
       }
