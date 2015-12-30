@@ -1,18 +1,15 @@
-/**
- * Config
- */
+/* Config */
 :root {
-
-  --icon-size: 21px;
-
+  --arrow-size: 12px;
 }
 
 :host {
   @apply(--typography);
-  z-index: var(--z-index);
-  display: inline-block;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   border-radius: var(--border-radius);
+  z-index: var(--on-top);
 }
 
 .controls {
@@ -20,7 +17,6 @@
   display: inline-flex;
   background: var(--blue);
   border-radius: var(--border-radius);
-  overflow: hidden;
   color: white;
   z-index: 1;
 }
@@ -35,38 +31,42 @@
 }
 
 .controls__menu {
+  --icon-size: 21px;
   width: var(--tool-size);
   border-left: 1px solid var(--light-white);
 }
 
 .menu {
+  position: relative;
+  top: var(--arrow-size);
+  right: 3px;
   background: white;
-
-  /* Box shadow offset */
-  width: calc(100% - 1px);
-
-  /* Border + bounce offset */
-  padding-top: 10px;
-  margin: -10px auto 0;
-
-  /* Polymer custom props can't handle shorthand */
-  border-bottom-left-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
-
-  overflow: hidden;
-  transform: translateY(-100%);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 2px var(--light-black);
+  transform-origin: 90% 0;
   display: none;
 }
 
+.menu::before {
+  content: '';
+  position: absolute;
+  top: calc(0px - var(--arrow-size) / 2);
+  right: var(--arrow-size);
+  height: var(--arrow-size);
+  width: var(--arrow-size);
+  transform: rotate(45deg);
+  background: inherit;
+  border-top-left-radius: var(--border-radius);
+  box-shadow: -0.5px -0.5px 0.5px var(--light-black);
+}
+
 .menu[visible] {
-  display: block;
-  box-shadow: 0 1px 1px var(--light-black);
+  display: block
 }
 
 .menu__item {
-  list-style: none;
-  padding: 0 15px;
   font-size: 14px;
+  padding: 0 15px;
   font-weight: 600;
   color: var(--dark-gray);
 }

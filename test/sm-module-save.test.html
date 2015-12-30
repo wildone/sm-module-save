@@ -142,18 +142,43 @@
         });
 
         it('should logout when clicking logout', function() {
+          // Add logout item
+          component.menu = [
+            { id: 'logout', text: 'Logout', icon: 'simpla:exit', onTap: '_logout' }
+          ];
+
+          // Force rerender of dom-repeat
+          component.$$('#menu template').render();
+
           sinon.stub(component.$.auth, 'logout');
-          component.$.logout.click();
+
+          component.$$('#logout').click();
           expect(component.$.auth.logout.called).to.be.true;
         });
 
         it('should toggle the menu on _menuOpenClose', function() {
-          component.menuActive = true;
-          component._menuOpenClose();
-          expect(component.menuActive).to.be.false;
+          component._menuActive = true;
+          component.toggleMenu();
+          expect(component._menuActive).to.be.false;
 
-          component._menuOpenClose();
-          expect(component.menuActive).to.be.true;
+          component.toggleMenu();
+          expect(component._menuActive).to.be.true;
+        });
+
+        it('should call onTap functions on item tap', function() {
+          // Add dummy item
+          component.menu = [
+            { id: 'foo', text: 'Foo', icon: 'simpla:exit', onTap: '_foo' }
+          ];
+
+          // Force rerender of dom-repeat
+          component.$$('#menu template').render();
+
+          // Add dummy function to check it being called
+          component._foo = sinon.spy();
+
+          component.$$('#foo').click();
+          expect(component._foo.called).to.be.true;
         });
 
         describe('notifications', function() {

@@ -83,10 +83,9 @@ wct.gulp.init(gulp);
 
 gulp.task('process', () => {
   let js = filter((file) => /\.(js)$/.test(file.path), { restore: true }),
-      html = filter((file) => /\.(html)$/.test(file.path), { restore: true }),
-      img = filter((file) => /\.(jpe?g|png|svg|gif)$/.test(file.path), { restore: true });
+      html = filter((file) => /\.(html)$/.test(file.path), { restore: true });
 
-  return gulp.src(['src/**/*.{html,js,css}', 'src/*.{html,js,css}'])
+  return gulp.src(['src/*.{html,js,css}'])
           .pipe(errorNotifier())
 
             // JS
