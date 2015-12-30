@@ -30,7 +30,7 @@ class SmModuleSave {
 
   /**
    * Tell Simpla elements to save their data
-   * @return undefined
+   * @return {undefined}
    */
   save() {
     let leftToSave = 0,
@@ -87,7 +87,7 @@ class SmModuleSave {
 
   /**
    * Trigger button busy state true
-   * @return undefined
+   * @return {undefined}
    */
   _beBusy() {
     this.busy = true;
@@ -95,7 +95,7 @@ class SmModuleSave {
 
   /**
    * Trigger button busy state false
-   * @return undefined
+   * @return {undefined}
    */
   _stopBusy() {
     this.busy = false;

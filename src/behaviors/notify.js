@@ -42,7 +42,7 @@ export default {
   /**
    * Helper function to build notifications
    * @param  {Object} notification details of notification to fire
-   * @return undefined
+   * @return {undefined}
    */
   _notify(notification) {
     const notify = getNotifier();
@@ -51,7 +51,7 @@ export default {
 
   /**
    * Notify successful save
-   * @return undefined
+   * @return {undefined}
    */
   _notifySuccess() {
     this._notify(NOTIFICATIONS.success);
@@ -60,7 +60,7 @@ export default {
   /**
    * Notifiy failed or warning save
    * @param  {Object} event.detail detail of the failure event
-   * @return undefined
+   * @return {undefined}
    */
   _notifyFailed({ detail }) {
     this._notify(detail.all ? NOTIFICATIONS.error : NOTIFICATIONS.warn);

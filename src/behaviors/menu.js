@@ -37,7 +37,7 @@ export default {
 
   /**
    * Convinience method to toggle the _menuActive property
-   * @return undefiend
+   * @return {undefined}
    */
   toggleMenu() {
     this._menuActive = !this._menuActive;
@@ -46,7 +46,7 @@ export default {
   /**
    * Open and close the menu on _menuActive change
    * @param  {Boolean} active state of the _menuActive property
-   * @return undefined
+   * @return {undefined}
    */
   _menuActiveChanged(active) {
     active ? this._openMenu() : this._closeMenu()
@@ -54,7 +54,7 @@ export default {
 
   /**
    * Animate the menu in
-   * @return undefined
+   * @return {undefined}
    */
   _openMenu(){
     let menu = this.$.menu;
@@ -65,7 +65,7 @@ export default {
 
   /**
    * Animate the menu out
-   * @return undefined
+   * @return {undefined}
    */
   _closeMenu() {
     let menu = this.$.menu,
@@ -80,7 +80,7 @@ export default {
   /**
    * Compute menu icon based on menu state
    * @param  {Boolean} _menuActive whether menu acitve or not (property)
-   * @return undefined
+   * @return {undefined}
    */
   _computeMenuIcon(_menuActive) {
     let icon;
@@ -93,7 +93,7 @@ export default {
    * Handle menu item taps
    * @param  {CustomEvent} event Takes model property from event to get name of
    *                             	tap handler
-   * @return undefined
+   * @return {undefined}
    */
   _menuItemTap(event) {
     let model = event.model;
@@ -111,7 +111,7 @@ export default {
 
   /**
    * Trigger logout
-   * @return undefined
+   * @return {undefined}
    */
   _logout() {
     this.$.auth.logout();
