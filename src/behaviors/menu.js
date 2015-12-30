@@ -1,13 +1,13 @@
 const easings = simpla.constants.easings,
       ANIMATION = {
         frames: [
-          { transform: 'translateY(-100%)' },
-          { transform: 'translateY(0)' }
+          { transform: 'scale(0.95, 0.8)', opacity: 0 },
+          { transform: 'scale(1, 1)', opacity: 1 }
         ],
         opts: {
           easing: easings.easeOutCubic,
           fill: 'both',
-          duration: 180
+          duration: 90
         }
       };
 
@@ -89,18 +89,6 @@ export default {
     return icon;
   },
 
-  /*********************
-   * Menu item actions *
-   *********************/
-
-  /**
-   * Trigger logout
-   * @return undefined
-   */
-  _logout() {
-    this.$.auth.logout();
-  },
-
   /**
    * Handle menu item taps
    * @param  {CustomEvent} event Takes model property from event to get name of
@@ -113,5 +101,20 @@ export default {
     if (model && typeof this[model.item.onTap] === 'function') {
       this[model.item.onTap](event);
     }
+
+    this._menuActive = false;
+  },
+
+  /*********************
+   * Menu item actions *
+   *********************/
+
+  /**
+   * Trigger logout
+   * @return undefined
+   */
+  _logout() {
+    this.$.auth.logout();
   }
+
 };

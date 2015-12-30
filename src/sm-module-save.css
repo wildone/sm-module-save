@@ -1,7 +1,13 @@
+/* Config */
+:root {
+  --arrow-size: 12px;
+}
+
 :host {
   @apply(--typography);
-  display: inline-block;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   border-radius: var(--border-radius);
   z-index: var(--on-top);
 }
@@ -11,7 +17,6 @@
   display: inline-flex;
   background: var(--blue);
   border-radius: var(--border-radius);
-  overflow: hidden;
   color: white;
   z-index: 1;
 }
@@ -32,14 +37,27 @@
 }
 
 .menu {
+  position: relative;
+  top: var(--arrow-size);
+  right: 3px;
   background: white;
-  box-shadow: 0 1px 1px var(--light-black);
-  overflow: hidden;
-  /* Polymer custom props can't handle shorthand */
-  border-bottom-left-radius: var(--border-radius);
-  border-bottom-right-radius: var(--border-radius);
-
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 2px var(--light-black);
+  transform-origin: 90% 0;
   display: none;
+}
+
+.menu::before {
+  content: '';
+  position: absolute;
+  top: calc(0px - var(--arrow-size) / 2);
+  right: var(--arrow-size);
+  height: var(--arrow-size);
+  width: var(--arrow-size);
+  transform: rotate(45deg);
+  background: inherit;
+  border-top-left-radius: var(--border-radius);
+  box-shadow: -0.5px -0.5px 0.5px var(--light-black);
 }
 
 .menu[visible] {
