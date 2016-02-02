@@ -22,9 +22,9 @@
   "dependencies": {
     "webcomponentsjs": "^0.7.14",
     "polymer": "^1.1.4",
-    "simpla-core": "git@github.com:simplaio/simpla-core.git",
-    "sm-ui-button": "git@github.com:simplaio/sm-ui-button.git",
-    "sm-utility-auth": "git@github.com:simplaio/sm-utility-auth.git"
+    "simpla-core": "https://github.com/simplaio/simpla-core.git",
+    "sm-ui-button": "https://github.com/simplaio/sm-ui-button.git",
+    "sm-utility-auth": "https://github.com/simplaio/sm-utility-auth.git"
   },
   "devDependencies": {
     "web-component-tester": "^3.3.22",
