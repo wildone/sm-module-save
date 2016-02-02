@@ -15,4 +15,4 @@ MIT © [Simpla](admin@simpla.io)
 [bowerdeps-badge]: https://img.shields.io/gemnasium/simplaio/sm-module-save.svg
 [bowerdeps-url]: https://gemnasium.com/bower/sm-module-save
 [npmdevdeps-badge]: https://img.shields.io/david/dev/simplaio/sm-module-save.svg?theme=shields.io
-[npmdevdeps-url]: https://david-dm.org/dev/simplaio/sm-module-save#info=devDependencies
+[npmdevdeps-url]: https://david-dm.org/simplaio/sm-module-save#info=devDependencies
