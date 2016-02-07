@@ -10,6 +10,7 @@
   align-items: flex-end;
   border-radius: var(--border-radius);
   z-index: var(--on-top);
+  overflow: visible;
 }
 
 .controls {
@@ -37,27 +38,10 @@
 }
 
 .menu {
-  position: relative;
-  top: var(--arrow-size);
+  top: 16px;
   right: 3px;
-  background: white;
-  border-radius: var(--border-radius);
-  box-shadow: 0 0 2px var(--light-black);
-  transform-origin: 90% 0;
   display: none;
-}
-
-.menu::before {
-  content: '';
-  position: absolute;
-  top: calc(0px - var(--arrow-size) / 2);
-  right: var(--arrow-size);
-  height: var(--arrow-size);
-  width: var(--arrow-size);
-  transform: rotate(45deg);
-  background: inherit;
-  border-top-left-radius: var(--border-radius);
-  box-shadow: -0.5px -0.5px 0.5px var(--light-black);
+  transform-origin: top right;
 }
 
 .menu[visible] {

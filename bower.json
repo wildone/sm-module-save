@@ -24,6 +24,7 @@
     "polymer": "^1.1.4",
     "simpla-core": "https://github.com/simplaio/simpla-core.git",
     "sm-ui-button": "https://github.com/simplaio/sm-ui-button.git",
+    "sm-ui-callout": "https://github.com/simplaio/sm-ui-callout.git",
     "sm-utility-auth": "https://github.com/simplaio/sm-utility-auth.git"
   },
   "devDependencies": {
@@ -34,6 +35,7 @@
     "polymer/polymer.html",
     "simpla-core/simpla-core.html",
     "sm-ui-button/sm-ui-button.html",
+    "sm-ui-callout/sm-ui-callout.html",
     "sm-utility-auth/sm-utility-auth.html"
   ]
 }
