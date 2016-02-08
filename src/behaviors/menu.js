@@ -1,32 +1,28 @@
-const easings = simpla.constants.easings,
-      ANIMATION = {
-        frames: [
-          { transform: 'scale(0.9, 0.8)', opacity: 0 },
-          { transform: 'scale(1, 1)', opacity: 1 }
-        ],
-        opts: {
-          easing: easings.easeOutCubic,
-          fill: 'both',
-          duration: 90
-        }
-      };
-
 export default {
 
   properties: {
 
-    // Array of menu item objects
-    // { id: String, text: String, icon: String, onTap: function }
+    /**
+     * Menu items
+     * @type {Array}
+     * { id: String, text: String, icon: String, onTap: function }
+     */
     menu: Array,
 
-    // Keep track of whether menu is open or closed
+    /**
+     * Whether menu active or not
+     * @type {Boolean}
+     */
     _menuActive: {
       type: Boolean,
       observer: '_menuActiveChanged'
     },
 
-    // Icon on the menu toggle button
-    // (computed based on state)
+    /**
+     *  Icon on the menu toggle button
+     *  (computed based on state)
+     *  @type {String}
+     */
     _menuIcon: {
       type: String,
       computed: '_computeMenuIcon(_menuActive)',
@@ -36,7 +32,7 @@ export default {
   },
 
   /**
-   * Convinience method to toggle the _menuActive property
+   * Convinience method to toggle the menu
    * @return {undefined}
    */
   toggleMenu() {
@@ -44,42 +40,17 @@ export default {
   },
 
   /**
-   * Open and close the menu on _menuActive change
-   * @param  {Boolean} active state of the _menuActive property
+   * Reflect _menuActive to callout active
+   * @param  {Boolean} active Current state of _menuActive
    * @return {undefined}
    */
   _menuActiveChanged(active) {
-    active ? this._openMenu() : this._closeMenu()
-  },
-
-  /**
-   * Animate the menu in
-   * @return {undefined}
-   */
-  _openMenu(){
-    let menu = this.$.menu;
-
-    this.toggleAttribute('visible', true, menu);
-    menu.animate(ANIMATION.frames, ANIMATION.opts);
-  },
-
-  /**
-   * Animate the menu out
-   * @return {undefined}
-   */
-  _closeMenu() {
-    let menu = this.$.menu,
-        animation;
-
-    animation = menu.animate(ANIMATION.frames.slice().reverse(), ANIMATION.opts);
-    animation.onfinish = () => {
-      this.toggleAttribute('visible', false, menu);
-    }
+    this.$.menu.active = active;
   },
 
   /**
    * Compute menu icon based on menu state
-   * @param  {Boolean} _menuActive whether menu acitve or not (property)
+   * @param  {Boolean} _menuActive Current state of _menuActive
    * @return {undefined}
    */
   _computeMenuIcon(_menuActive) {
@@ -91,8 +62,7 @@ export default {
 
   /**
    * Handle menu item taps
-   * @param  {CustomEvent} event Takes model property from event to get name of
-   *                             	tap handler
+   * @param  {CustomEvent} event Takes model property from event to get name of tap handler
    * @return {undefined}
    */
   _menuItemTap(event) {
