@@ -40,15 +40,6 @@ export default {
   },
 
   /**
-   * Reflect _menuActive to callout active
-   * @param  {Boolean} active Current state of _menuActive
-   * @return {undefined}
-   */
-  _menuActiveChanged(active) {
-    this.$.menu.active = active;
-  },
-
-  /**
    * Compute menu icon based on menu state
    * @param  {Boolean} _menuActive Current state of _menuActive
    * @return {undefined}
