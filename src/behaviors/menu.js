@@ -7,7 +7,12 @@ export default {
      * @type {Array}
      * { id: String, text: String, icon: String, onTap: function }
      */
-    menu: Array,
+    menu: {
+      type: Array,
+      value: [
+        { id: 'logout', text: 'Logout', icon: 'simpla:exit', onTap: '_logout' }
+      ]
+    },
 
     /**
      * Whether menu active or not
