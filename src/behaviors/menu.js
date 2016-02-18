@@ -13,10 +13,7 @@ export default {
      * Whether menu active or not
      * @type {Boolean}
      */
-    _menuActive: {
-      type: Boolean,
-      observer: '_menuActiveChanged'
-    },
+    _menuActive: Boolean,
 
     /**
      *  Icon on the menu toggle button
