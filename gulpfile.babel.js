@@ -107,7 +107,7 @@ gulp.task('process', () => {
 });
 
 gulp.task('build', ['process'], () => {
-  return gulp.src([`.tmp/${ELEMENT_NAME}/${ELEMENT_NAME}.html`,`.tmp/${ELEMENT_NAME}.html`])
+  return gulp.src([`.tmp/${ELEMENT_NAME}.html`])
           .pipe(errorNotifier())
           .pipe(vulcanize(OPTIONS.vulcanize))
           .pipe(gulpif(!argv.debug, minifyHTML(OPTIONS.HTMLmin)))
