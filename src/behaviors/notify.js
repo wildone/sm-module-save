@@ -5,7 +5,7 @@ const NOTIFICATIONS = {
     message: 'Hooray! Your changes are published'
   },
   warn: {
-    type: 'warn',
+    type: 'warning',
     title: 'Uhhhh',
     message: 'Looks like some things didn\'t save properly. Try again',
   },

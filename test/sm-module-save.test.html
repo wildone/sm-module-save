@@ -193,9 +193,14 @@
             expect(simpla.notifications.notify.called).to.be.true;
           });
 
-          it('should notify on saved', function() {
+          it('should notify on save-failed', function() {
             component.fire('save-failed', { all: true });
             expect(simpla.notifications.notify.called).to.be.true;
+          });
+
+          it('should call warning on save failed, all = false', function() {
+            component.fire('save-failed', { all: false });
+            expect(simpla.notifications.notify.calledWith('warning')).to.be.true;
           });
         });
       });
