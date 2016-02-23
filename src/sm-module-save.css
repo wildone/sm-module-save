@@ -19,6 +19,7 @@
   background: var(--blue);
   border-radius: var(--border-radius);
   color: white;
+  box-shadow: 0 1px 2px var(--light-black);
   z-index: 1;
 }
 
