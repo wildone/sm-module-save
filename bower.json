@@ -30,12 +30,5 @@
   "devDependencies": {
     "web-component-tester": "^3.3.22",
     "test-fixture": "PolymerElements/test-fixture#~1.0.0"
-  },
-  "componentImports": [
-    "polymer/polymer.html",
-    "simpla-core/simpla-core.html",
-    "sm-ui-button/sm-ui-button.html",
-    "sm-ui-callout/sm-ui-callout.html",
-    "sm-utility-auth/sm-utility-auth.html"
-  ]
+  }
 }
