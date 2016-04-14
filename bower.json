@@ -1,7 +1,7 @@
 {
   "name": "sm-module-save",
   "description": "Global save control for Simpla",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "authors": [
     "Simpla <admin@simpla.io>"
   ],
