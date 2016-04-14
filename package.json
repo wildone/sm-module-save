@@ -16,10 +16,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/simplaio/sm-module-save.git"
+    "url": "https://github.com/SimplaElements/sm-module-save.git"
   },
   "bugs": {
-    "url": "https://github.com/simplaio/sm-module-save/issues"
+    "url": "https://github.com/SimplaElements/sm-module-save/issues"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.0",

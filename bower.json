@@ -22,10 +22,10 @@
   "dependencies": {
     "webcomponentsjs": "^0.7.14",
     "polymer": "^1.1.4",
-    "sm-ui-core": "https://github.com/SimplaElements/sm-ui-core.git",
-    "sm-ui-button": "https://github.com/simplaio/sm-ui-button.git",
-    "sm-ui-callout": "https://github.com/simplaio/sm-ui-callout.git",
-    "sm-utility-auth": "https://github.com/simplaio/sm-utility-auth.git"
+    "sm-ui-core": "SimplaElements/sm-ui-core#^0.1.0",
+    "sm-ui-button": "SimplaElements/sm-ui-button#^0.1.0",
+    "sm-ui-callout": "SimplaElements/sm-ui-callout#^0.1.0",
+    "sm-utility-auth": "SimplaElements/sm-utility-auth#^0.1.0"
   },
   "devDependencies": {
     "web-component-tester": "^3.3.22",
