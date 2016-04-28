@@ -121,6 +121,11 @@ class SmModuleSave {
   _stopBusy() {
     this.busy = false;
   }
-}
+
+  logout() {
+    this.$.auth.logout();
+  }
+
+};
 
 Polymer(SmModuleSave);

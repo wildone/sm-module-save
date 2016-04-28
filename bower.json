@@ -24,8 +24,8 @@
     "polymer": "^1.1.4",
     "sm-ui-core": "SimplaElements/sm-ui-core#^0.1.0",
     "sm-ui-button": "SimplaElements/sm-ui-button#^0.1.0",
-    "sm-ui-callout": "SimplaElements/sm-ui-callout#^0.1.0",
-    "sm-utility-auth": "SimplaElements/sm-utility-auth#^0.1.0"
+    "sm-utility-auth": "SimplaElements/sm-utility-auth#^0.1.0",
+    "sm-ui-user-menu": "SimplaElements/sm-ui-user-menu#^0.1.4"
   },
   "devDependencies": {
     "web-component-tester": "^3.3.22",

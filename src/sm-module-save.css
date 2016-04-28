@@ -1,57 +1,27 @@
-/* Config */
-:root {
-  --arrow-size: 12px;
-}
-
 :host {
   @apply(--typography);
   display: flex;
-  flex-direction: column;
   align-items: flex-end;
-  border-radius: var(--border-radius);
-  z-index: var(--on-top);
-  overflow: visible;
-}
-
-.controls {
-  position: relative;
-  display: inline-flex;
+  height: var(--tool-size);
   background: var(--blue);
-  border-radius: var(--border-radius);
   color: white;
-  box-shadow: 0 1px 2px var(--light-black);
-  z-index: 1;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  z-index: var(--on-top);
 }
 
-.controls__save {
+.save {
   padding: 0 1.5em;
   font-weight: 600;
+  height: 100%;
 }
 
-.controls__save[busy] {
+.save[busy] {
   color: var(--med-white);
 }
 
-.controls__menu {
-  --icon-size: 21px;
-  width: var(--tool-size);
-  border-left: 1px solid var(--light-white);
-}
-
 .menu {
-  top: 16px;
-  right: 3px;
-  display: none;
-  transform-origin: top right;
-}
-
-.menu[visible] {
-  display: block
-}
-
-.menu__item {
-  font-size: 14px;
-  padding: 0 15px;
-  font-weight: 600;
-  color: var(--dark-gray);
+  width: var(--tool-size);
+  height: 100%;
+  border-left: 1px solid var(--light-white);
 }
