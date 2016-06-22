@@ -7,14 +7,14 @@ class SmModuleSave {
 
     this.properties = {
 
-      // Show button as busy
-      // while saving
+      /**
+       * Whether saving
+       * @type {[type]}
+       */
       busy: Boolean,
 
     };
 
-    // Listen for save events
-    // to enter and exit busy
     this.listeners = {
       'saving': '_beBusy',
       'saved': '_stopBusy'
@@ -90,8 +90,7 @@ class SmModuleSave {
           failedSaves++;
         }
 
-        // If it's not waiting on any more saves, and save requests have been
-        //  made on all, call finished.
+        // If it's not waiting on any more saves call finished.
         if (leftToSave === 0 && haveTriedAll) {
           finished();
         }
@@ -121,6 +120,11 @@ class SmModuleSave {
   _stopBusy() {
     this.busy = false;
   }
-}
+
+  logout() {
+    this.$.auth.logout();
+  }
+
+};
 
 Polymer(SmModuleSave);

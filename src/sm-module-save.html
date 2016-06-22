@@ -1,27 +1,50 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../sm-ui-core/sm-ui-core.html">
-<link rel="import" href="../sm-ui-button/sm-ui-button.html">
-<link rel="import" href="../sm-ui-callout/sm-ui-callout.html">
+<link rel="import" href="../sm-ui-user-menu/sm-ui-user-menu.html">
 <link rel="import" href="../sm-utility-auth/sm-utility-auth.html">
 
 <dom-module id="sm-module-save">
   <template>
     <style include="sm-css-shady"></style>
     <style include="sm-css"></style>
-    <link rel="stylesheet" href="./sm-module-save.css" inline>
+    <style>
+      :host {
+        @apply(--typography);
+        display: flex;
+        align-items: flex-end;
+        height: var(--tool-size);
+        background: var(--blue);
+        color: white;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        z-index: var(--on-top);
+      }
 
-    <div class="controls">
-      <button is="sm-ui-button" on-tap="save" busy="[[busy]]" class="controls__save">save</button>
-      <button is="sm-ui-button" on-tap="toggleMenu" class="controls__menu" icon="[[_menuIcon]]"></button>
-    </div>
+      .save {
+        padding: 0 1.5em;
+        font-weight: 600;
+        height: 100%;
+      }
 
-    <sm-ui-callout arrow="top right" class="menu" id="menu" active="[[_menuActive]]">
-      <template is="dom-repeat" items="[[menu]]">
-        <button is="sm-ui-button" id="[[item.id]]" class="menu__item" icon="[[item.icon]]" on-tap="_menuItemTap">[[item.text]]</button>
-      </template>
-    </sm-ui-callout>
+      .save[busy] {
+        color: var(--med-white);
+      }
 
-    <sm-utility-auth id="auth"></sm-utility-auth>
+      .menu {
+        --user-menu-spacing: 55px;
+        width: var(--tool-size);
+        height: 100%;
+        border-left: 1px solid var(--light-white);
+      }
+    </style>
+
+      <button is="sm-ui-button" on-tap="save" busy="[[busy]]" class="save">save</button>
+
+      <sm-ui-user-menu id="menu" class="menu" callout="top right" user="[[user.email]]">
+        <sm-user-menu-item icon="simpla:exit" on-tap="logout">Logout</sm-user-menu-item>
+      </sm-ui-user-menu>
+
+    <sm-utility-auth id="auth" token="{{token}}"></sm-utility-auth>
 
   </template>
   <script src="./sm-module-save.js" inline></script>
