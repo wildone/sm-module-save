@@ -58,9 +58,11 @@ export default {
    * @return {undefined}
    */
   _tokenChanged(token) {
-    let id = extractPayload(token).sub;
+    if (!token) {
+      return;
+    }
 
-    fetch(`${USERS_ENDPOINT}/${id}`, {
+    fetch(`${USERS_ENDPOINT}/${extractPayload(token).sub}`, {
       headers: makeHeaders({
         'Authorization': `Bearer ${token}`
       })
