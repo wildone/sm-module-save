@@ -13,11 +13,18 @@ class SmModuleSave {
        */
       busy: Boolean,
 
+      hidden: {
+        type: Boolean,
+        reflectToAttribute: true,
+        value: true
+      }
+
     };
 
     this.listeners = {
       'saving': '_beBusy',
-      'saved': '_stopBusy'
+      'saved': '_stopBusy',
+      'auth.authenticated-changed': '_updateHidden'
     };
   }
 
@@ -123,6 +130,10 @@ class SmModuleSave {
 
   logout() {
     this.$.auth.logout();
+  }
+
+  _updateHidden(event) {
+    this.hidden = !event.detail.value;
   }
 
 };

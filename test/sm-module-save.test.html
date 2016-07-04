@@ -8,9 +8,16 @@
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
     <link rel="import" href="../../test-fixture/test-fixture.html">
 
+    <script>
+      window.simpla = window.simpla || {};
+      window.simpla.config = {
+        server: '',
+        api: ''
+      };
+    </script>
+
     <!-- Import the element to test -->
     <link rel="import" href="../sm-module-save.html">
-    <script src="./sm-module-save.fixtures.js"></script>
   </head>
   <body>
     <test-fixture id="default">
@@ -21,10 +28,7 @@
     <script>
       describe('<sm-module-save>', function() {
 
-        var component,
-            componentFixtures;
-
-        componentFixtures = window.fixtures;
+        var component;
 
         beforeEach(function() {
           component = fixture('default');
@@ -141,46 +145,6 @@
           });
         });
 
-        it('should logout when clicking logout', function() {
-          // Add logout item
-          component.menu = [
-            { id: 'logout', text: 'Logout', icon: 'simpla:exit', onTap: '_logout' }
-          ];
-
-          // Force rerender of dom-repeat
-          component.$$('#menu template').render();
-
-          sinon.stub(component.$.auth, 'logout');
-
-          component.$$('#logout').click();
-          expect(component.$.auth.logout.called).to.be.true;
-        });
-
-        it('should toggle the menu on _menuOpenClose', function() {
-          component._menuActive = true;
-          component.toggleMenu();
-          expect(component._menuActive).to.be.false;
-
-          component.toggleMenu();
-          expect(component._menuActive).to.be.true;
-        });
-
-        it('should call onTap functions on item tap', function() {
-          // Add dummy item
-          component.menu = [
-            { id: 'foo', text: 'Foo', icon: 'simpla:exit', onTap: '_foo' }
-          ];
-
-          // Force rerender of dom-repeat
-          component.$$('#menu template').render();
-
-          // Add dummy function to check it being called
-          component._foo = sinon.spy();
-
-          component.$$('#foo').click();
-          expect(component._foo.called).to.be.true;
-        });
-
         describe('notifications', function() {
           beforeEach(function() {
             simpla.notifications = {
@@ -201,6 +165,23 @@
           it('should call warning on save failed, all = false', function() {
             component.fire('save-failed', { all: false });
             expect(simpla.notifications.notify.calledWith('warning')).to.be.true;
+          });
+        });
+
+        describe('visibility', function() {
+          it('should only be visible while authenticated', function() {
+            component.$.auth.authenticated = true;
+            expect(component.hidden).to.be.false;
+
+            component.$.auth.authenticated = false;
+            expect(component.hidden).to.be.true;
+          });
+
+          it('should not pass its hidden value to authenticated', function() {
+            component.$.auth.authenticated = true;
+            component.hidden = true;
+
+            expect(component.$.auth.authenticated).to.be.true;
           });
         });
       });
