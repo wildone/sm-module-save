@@ -1,7 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../sm-ui-core/sm-ui-core.html">
 <link rel="import" href="../sm-ui-user-menu/sm-ui-user-menu.html">
-<link rel="import" href="../sm-utility-auth/sm-utility-auth.html">
 
 <dom-module id="sm-module-save">
   <template>
@@ -38,14 +37,11 @@
       }
     </style>
 
-      <button is="sm-ui-button" on-tap="save" busy="[[busy]]" class="save">save</button>
+    <button is="sm-ui-button" on-tap="save" busy="[[busy]]" class="save">save</button>
 
-      <sm-ui-user-menu id="menu" class="menu" callout="top right" user="[[user.email]]">
-        <sm-user-menu-item icon="simpla:exit" on-tap="logout">Logout</sm-user-menu-item>
-      </sm-ui-user-menu>
-
-    <sm-utility-auth id="auth" token="{{token}}"></sm-utility-auth>
-
+    <sm-ui-user-menu id="menu" class="menu" callout="top right" user="[[user.email]]">
+      <sm-user-menu-item icon="simpla:exit" on-tap="logout">Logout</sm-user-menu-item>
+    </sm-ui-user-menu>
   </template>
   <script src="./sm-module-save.js" inline></script>
 </dom-module>

@@ -8,9 +8,20 @@
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
     <link rel="import" href="../../test-fixture/test-fixture.html">
 
+    <script>
+      var token = 'some-token';
+      window.Simpla = {
+        getState: sinon.stub().returns({ token: token }),
+        observe: sinon.stub()
+      }
+
+      window.simpla = {
+        config: {}
+      }
+    </script>
+
     <!-- Import the element to test -->
     <link rel="import" href="../sm-module-save.html">
-    <script src="./sm-module-save.fixtures.js"></script>
   </head>
   <body>
     <test-fixture id="default">
@@ -201,6 +212,22 @@
           it('should call warning on save failed, all = false', function() {
             component.fire('save-failed', { all: false });
             expect(simpla.notifications.notify.calledWith('warning')).to.be.true;
+          });
+        });
+
+        describe('token', function() {
+          it('should have loaded the initial value from Simpla', function() {
+            expect(component.token).to.equal(token);
+          });
+
+          it('should bind its value to Simpla', function() {
+            var freshToken = token + '-fresh',
+                observing = Simpla.observe.lastCall.args[0],
+                callback = Simpla.observe.lastCall.args[1];
+
+            expect(observing).to.equal('token');
+            callback(freshToken);
+            expect(component.token).to.equal(freshToken);
           });
         });
       });
