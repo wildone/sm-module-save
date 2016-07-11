@@ -122,7 +122,7 @@ class SmModuleSave {
   }
 
   logout() {
-    this.$.auth.logout();
+    Simpla.logout();
   }
 
 };

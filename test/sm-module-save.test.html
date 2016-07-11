@@ -12,7 +12,8 @@
       var token = 'some-token';
       window.Simpla = {
         getState: sinon.stub().returns({ token: token }),
-        observe: sinon.stub()
+        observe: sinon.stub(),
+        logout: sinon.stub()
       }
 
       window.simpla = {
@@ -152,44 +153,9 @@
           });
         });
 
-        it('should logout when clicking logout', function() {
-          // Add logout item
-          component.menu = [
-            { id: 'logout', text: 'Logout', icon: 'simpla:exit', onTap: '_logout' }
-          ];
-
-          // Force rerender of dom-repeat
-          component.$$('#menu template').render();
-
-          sinon.stub(component.$.auth, 'logout');
-
-          component.$$('#logout').click();
-          expect(component.$.auth.logout.called).to.be.true;
-        });
-
-        it('should toggle the menu on _menuOpenClose', function() {
-          component._menuActive = true;
-          component.toggleMenu();
-          expect(component._menuActive).to.be.false;
-
-          component.toggleMenu();
-          expect(component._menuActive).to.be.true;
-        });
-
-        it('should call onTap functions on item tap', function() {
-          // Add dummy item
-          component.menu = [
-            { id: 'foo', text: 'Foo', icon: 'simpla:exit', onTap: '_foo' }
-          ];
-
-          // Force rerender of dom-repeat
-          component.$$('#menu template').render();
-
-          // Add dummy function to check it being called
-          component._foo = sinon.spy();
-
-          component.$$('#foo').click();
-          expect(component._foo.called).to.be.true;
+        it('logout should call logout on Simpla', function() {
+          component.logout();
+          expect(Simpla.logout.called).to.be.true;
         });
 
         describe('notifications', function() {
