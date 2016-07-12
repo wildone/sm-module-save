@@ -141,6 +141,12 @@
               expect(listeners.failed.called).to.be.true;
             });
 
+            it('should stop being busy on fail', function() {
+              component.busy = true;
+              component.fire('save-failed', { all: true });
+              expect(component.busy).to.be.false;
+            });
+
             it('should notify failed if some elements failed', function() {
               all = false;
 

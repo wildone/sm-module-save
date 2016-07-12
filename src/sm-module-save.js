@@ -18,7 +18,8 @@ class SmModuleSave {
 
     this.listeners = {
       'saving': '_beBusy',
-      'saved': '_stopBusy'
+      'saved': '_stopBusy',
+      'save-failed': '_stopBusy'
     };
   }
 
