@@ -1,5 +1,6 @@
 import menu from './behaviors/menu';
 import notify from './behaviors/notify';
+import singleton from './behaviors/singleton';
 
 class SmModuleSave {
   beforeRegister() {
@@ -24,7 +25,8 @@ class SmModuleSave {
   get behaviors() {
     return [
       menu,
-      notify
+      notify,
+      singleton
     ];
   }
 

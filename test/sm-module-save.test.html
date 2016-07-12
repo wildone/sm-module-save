@@ -9,9 +9,10 @@
     <link rel="import" href="../../test-fixture/test-fixture.html">
 
     <script>
-      var token = 'some-token';
+      var token = 'some-token',
+          authenticated = true;
       window.Simpla = {
-        getState: sinon.stub().returns({ token: token }),
+        getState: sinon.stub().returns({ token: token, authenticated: authenticated }),
         observe: sinon.stub(),
         logout: sinon.stub()
       }
@@ -158,6 +159,40 @@
           expect(Simpla.logout.called).to.be.true;
         });
 
+        describe('singleton', function() {
+          it('show itself only when authenticated', function() {
+            component._authenticated = true;
+            expect(component.hasAttribute('hidden')).to.be.false;
+
+            component._authenticated = false;
+            expect(component.hasAttribute('hidden')).to.be.true;
+          });
+
+          it('should have added a child to body', function() {
+            // Including component from fixtures
+            expect([].slice.call(document.querySelectorAll('sm-module-save'))).to.have.lengthOf(2);
+          });
+
+          it('should bind authenticated to Simpla', function() {
+            var call = Simpla.observe.withArgs('authenticated').lastCall,
+                callback = call && call.args[1];
+
+            expect(call).to.not.be.null;
+
+            // Check initial value
+            expect(component._authenticated).to.equal(authenticated);
+
+            // reset
+            component._authenticated = false;
+
+            callback(true);
+            expect(component._authenticated).to.be.true;
+
+            callback(false);
+            expect(component._authenticated).to.be.false;
+          });
+        });
+
         describe('notifications', function() {
           beforeEach(function() {
             simpla.notifications = {
@@ -188,8 +223,8 @@
 
           it('should bind its value to Simpla', function() {
             var freshToken = token + '-fresh',
-                observing = Simpla.observe.lastCall.args[0],
-                callback = Simpla.observe.lastCall.args[1];
+                observing = Simpla.observe.withArgs('token').lastCall.args[0],
+                callback = Simpla.observe.withArgs('token').lastCall.args[1];
 
             expect(observing).to.equal('token');
             callback(freshToken);
