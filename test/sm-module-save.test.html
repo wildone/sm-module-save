@@ -6,15 +6,18 @@
     <script src="../../webcomponentsjs/webcomponents.min.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
-    <link rel="import" href="../../test-fixture/test-fixture.html">
 
+    <link rel="import" href="../../test-fixture/test-fixture.html">
     <script>
       var token = 'some-token',
           authenticated = true;
+
+      // Override Simpla, we just want it for its polyfills
       window.Simpla = {
         getState: sinon.stub().returns({ token: token, authenticated: authenticated }),
         observe: sinon.stub(),
-        logout: sinon.stub()
+        logout: sinon.stub(),
+        toggleEditing: sinon.stub()
       }
 
       window.simpla = {
@@ -41,6 +44,10 @@
 
         beforeEach(function() {
           component = fixture('default');
+        });
+
+        afterEach(function() {
+          Simpla.toggleEditing.reset();
         });
 
         it('is okay', function() {
@@ -157,6 +164,11 @@
         it('logout should call logout on Simpla', function() {
           component.logout();
           expect(Simpla.logout.called).to.be.true;
+        });
+
+        it('should stop editing on logout', function() {
+          component.logout()
+          expect(Simpla.toggleEditing.calledWith(false)).to.be.true;
         });
 
         describe('singleton', function() {

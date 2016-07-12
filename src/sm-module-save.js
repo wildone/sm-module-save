@@ -124,7 +124,8 @@ class SmModuleSave {
   }
 
   logout() {
-    Simpla.logout();
+    Simpla.toggleEditing(false);
+    return Simpla.logout();
   }
 
 };
