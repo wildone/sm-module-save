@@ -10,11 +10,16 @@
     <link rel="import" href="../../test-fixture/test-fixture.html">
     <script>
       var token = 'some-token',
-          authenticated = true;
+          authenticated = true,
+          editing = true;
 
       // Override Simpla, we just want it for its polyfills
       window.Simpla = {
-        getState: sinon.stub().returns({ token: token, authenticated: authenticated }),
+        getState: sinon.stub().returns({
+          token: token,
+          authenticated: authenticated,
+          editing: editing
+        }),
         observe: sinon.stub(),
         logout: sinon.stub(),
         toggleEditing: sinon.stub()
@@ -178,11 +183,21 @@
         });
 
         describe('singleton', function() {
-          it('show itself only when authenticated', function() {
+          it('show itself only when authenticated and editing', function() {
             component._authenticated = true;
+            component._editing = true;
             expect(component.hasAttribute('hidden')).to.be.false;
 
             component._authenticated = false;
+            component._editing = true;
+            expect(component.hasAttribute('hidden')).to.be.true;
+
+            component._authenticated = false;
+            component._editing = true;
+            expect(component.hasAttribute('hidden')).to.be.true;
+
+            component._authenticated = false;
+            component._editing = false;
             expect(component.hasAttribute('hidden')).to.be.true;
           });
 
@@ -208,6 +223,25 @@
 
             callback(false);
             expect(component._authenticated).to.be.false;
+          });
+
+          it('should bind editing to Simpla', function() {
+            var call = Simpla.observe.withArgs('editing').lastCall,
+                callback = call && call.args[1];
+
+            expect(call).to.not.be.null;
+
+            // Check initial value
+            expect(component._editing).to.equal(editing);
+
+            // reset
+            component._editing = false;
+
+            callback(true);
+            expect(component._editing).to.be.true;
+
+            callback(false);
+            expect(component._editing).to.be.false;
           });
         });
 
