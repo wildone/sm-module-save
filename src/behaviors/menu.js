@@ -45,11 +45,16 @@ export default {
 
     token: {
       type: Object,
-      observer: '_tokenChanged'
+      observer: '_tokenChanged',
+      value: Simpla.getState().token
     },
 
     user: Object
 
+  },
+
+  created() {
+    Simpla.observe('token', (token) => this.token = token);
   },
 
   /**
@@ -58,7 +63,7 @@ export default {
    * @return {undefined}
    */
   _tokenChanged(token) {
-    if (!token) {
+    if (!token || !extractPayload(token)) {
       return;
     }
 

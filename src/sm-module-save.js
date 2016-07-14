@@ -1,5 +1,6 @@
 import menu from './behaviors/menu';
 import notify from './behaviors/notify';
+import singleton from './behaviors/singleton';
 
 class SmModuleSave {
   beforeRegister() {
@@ -17,14 +18,16 @@ class SmModuleSave {
 
     this.listeners = {
       'saving': '_beBusy',
-      'saved': '_stopBusy'
+      'saved': '_stopBusy',
+      'save-failed': '_stopBusy'
     };
   }
 
   get behaviors() {
     return [
       menu,
-      notify
+      notify,
+      singleton
     ];
   }
 
@@ -122,7 +125,8 @@ class SmModuleSave {
   }
 
   logout() {
-    this.$.auth.logout();
+    Simpla.toggleEditing(false);
+    return Simpla.logout();
   }
 
 };

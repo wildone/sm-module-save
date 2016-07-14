@@ -6,11 +6,32 @@
     <script src="../../webcomponentsjs/webcomponents.min.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
+
     <link rel="import" href="../../test-fixture/test-fixture.html">
+    <script>
+      var token = 'some-token',
+          authenticated = true,
+          editing = true;
+
+      // Override Simpla, we just want it for its polyfills
+      window.Simpla = {
+        getState: sinon.stub().returns({
+          token: token,
+          authenticated: authenticated,
+          editing: editing
+        }),
+        observe: sinon.stub(),
+        logout: sinon.stub(),
+        toggleEditing: sinon.stub()
+      }
+
+      window.simpla = {
+        config: {}
+      }
+    </script>
 
     <!-- Import the element to test -->
     <link rel="import" href="../sm-module-save.html">
-    <script src="./sm-module-save.fixtures.js"></script>
   </head>
   <body>
     <test-fixture id="default">
@@ -28,6 +49,10 @@
 
         beforeEach(function() {
           component = fixture('default');
+        });
+
+        afterEach(function() {
+          Simpla.toggleEditing.reset();
         });
 
         it('is okay', function() {
@@ -121,6 +146,12 @@
               expect(listeners.failed.called).to.be.true;
             });
 
+            it('should stop being busy on fail', function() {
+              component.busy = true;
+              component.fire('save-failed', { all: true });
+              expect(component.busy).to.be.false;
+            });
+
             it('should notify failed if some elements failed', function() {
               all = false;
 
@@ -141,44 +172,77 @@
           });
         });
 
-        it('should logout when clicking logout', function() {
-          // Add logout item
-          component.menu = [
-            { id: 'logout', text: 'Logout', icon: 'simpla:exit', onTap: '_logout' }
-          ];
-
-          // Force rerender of dom-repeat
-          component.$$('#menu template').render();
-
-          sinon.stub(component.$.auth, 'logout');
-
-          component.$$('#logout').click();
-          expect(component.$.auth.logout.called).to.be.true;
+        it('logout should call logout on Simpla', function() {
+          component.logout();
+          expect(Simpla.logout.called).to.be.true;
         });
 
-        it('should toggle the menu on _menuOpenClose', function() {
-          component._menuActive = true;
-          component.toggleMenu();
-          expect(component._menuActive).to.be.false;
-
-          component.toggleMenu();
-          expect(component._menuActive).to.be.true;
+        it('should stop editing on logout', function() {
+          component.logout()
+          expect(Simpla.toggleEditing.calledWith(false)).to.be.true;
         });
 
-        it('should call onTap functions on item tap', function() {
-          // Add dummy item
-          component.menu = [
-            { id: 'foo', text: 'Foo', icon: 'simpla:exit', onTap: '_foo' }
-          ];
+        describe('singleton', function() {
+          it('show itself only when authenticated and editing', function() {
+            component._authenticated = true;
+            component._editing = true;
+            expect(component.hasAttribute('hidden')).to.be.false;
 
-          // Force rerender of dom-repeat
-          component.$$('#menu template').render();
+            component._authenticated = false;
+            component._editing = true;
+            expect(component.hasAttribute('hidden')).to.be.true;
 
-          // Add dummy function to check it being called
-          component._foo = sinon.spy();
+            component._authenticated = false;
+            component._editing = true;
+            expect(component.hasAttribute('hidden')).to.be.true;
 
-          component.$$('#foo').click();
-          expect(component._foo.called).to.be.true;
+            component._authenticated = false;
+            component._editing = false;
+            expect(component.hasAttribute('hidden')).to.be.true;
+          });
+
+          it('should have added a child to body', function() {
+            // Including component from fixtures
+            expect([].slice.call(document.querySelectorAll('sm-module-save'))).to.have.lengthOf(2);
+          });
+
+          it('should bind authenticated to Simpla', function() {
+            var call = Simpla.observe.withArgs('authenticated').lastCall,
+                callback = call && call.args[1];
+
+            expect(call).to.not.be.null;
+
+            // Check initial value
+            expect(component._authenticated).to.equal(authenticated);
+
+            // reset
+            component._authenticated = false;
+
+            callback(true);
+            expect(component._authenticated).to.be.true;
+
+            callback(false);
+            expect(component._authenticated).to.be.false;
+          });
+
+          it('should bind editing to Simpla', function() {
+            var call = Simpla.observe.withArgs('editing').lastCall,
+                callback = call && call.args[1];
+
+            expect(call).to.not.be.null;
+
+            // Check initial value
+            expect(component._editing).to.equal(editing);
+
+            // reset
+            component._editing = false;
+
+            callback(true);
+            expect(component._editing).to.be.true;
+
+            callback(false);
+            expect(component._editing).to.be.false;
+          });
         });
 
         describe('notifications', function() {
@@ -201,6 +265,22 @@
           it('should call warning on save failed, all = false', function() {
             component.fire('save-failed', { all: false });
             expect(simpla.notifications.notify.calledWith('warning')).to.be.true;
+          });
+        });
+
+        describe('token', function() {
+          it('should have loaded the initial value from Simpla', function() {
+            expect(component.token).to.equal(token);
+          });
+
+          it('should bind its value to Simpla', function() {
+            var freshToken = token + '-fresh',
+                observing = Simpla.observe.withArgs('token').lastCall.args[0],
+                callback = Simpla.observe.withArgs('token').lastCall.args[1];
+
+            expect(observing).to.equal('token');
+            callback(freshToken);
+            expect(component.token).to.equal(freshToken);
           });
         });
       });
