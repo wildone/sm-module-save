@@ -40,20 +40,37 @@ class SmModuleSave {
         successfulSaves = 0,
         failedSaves = 0,
         haveTriedAll = false,
+        ensureV2Saved,
         finished;
 
     this.fire('saving');
+
+    // Add support for Simpla v2 SDK
+    if (Simpla.save) {
+      ensureV2Saved = Simpla.save();
+    } else {
+      ensureV2Saved = Promise.resolve();
+    }
 
     /**
      * Fires saved, if there were no fails, otherwise fires save-failed
      * @return {[type]} [description]
      */
     finished = () => {
-      if (failedSaves === 0) {
-        this.fire('saved');
-      } else {
+      let failed = () => {
         this.fire('save-failed', { all: successfulSaves === 0 });
-      }
+      };
+
+      ensureV2Saved
+        .then(() => {
+          console.log('v2 saved');
+          if (failedSaves !== 0) {
+            return Promise.reject();
+          }
+
+          this.fire('saved');
+        })
+        .catch(failed);
     };
 
     // For each element, make a save request, then keep track of the successes
@@ -106,6 +123,10 @@ class SmModuleSave {
     });
 
     haveTriedAll = true;
+
+    if (simpla.elements.length === 0) {
+      finished();
+    }
   }
 
   /**
