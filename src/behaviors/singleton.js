@@ -2,12 +2,12 @@ export default {
   properties: {
     _authenticated: {
       type: Boolean,
-      value: () => Simpla.getState().authenticated
+      value: () => Simpla._v1.getState().authenticated
     },
 
     _editing: {
       type: Boolean,
-      value: () => Simpla.getState().editing
+      value: () => Simpla._v1.getState().editing
     }
   },
 
@@ -16,11 +16,11 @@ export default {
   ],
 
   created() {
-    Simpla.observe('authenticated', (authenticated) => {
+    Simpla._v1.observe('authenticated', (authenticated) => {
       this._authenticated = authenticated;
     });
 
-    Simpla.observe('editing', (editing) => {
+    Simpla._v1.observe('editing', (editing) => {
       this._editing = editing;
     });
   },

@@ -46,7 +46,7 @@ export default {
     token: {
       type: Object,
       observer: '_tokenChanged',
-      value: Simpla.getState().token
+      value: Simpla._v1.getState().token
     },
 
     user: Object
@@ -54,7 +54,7 @@ export default {
   },
 
   created() {
-    Simpla.observe('token', (token) => this.token = token);
+    Simpla._v1.observe('token', (token) => this.token = token);
   },
 
   /**
