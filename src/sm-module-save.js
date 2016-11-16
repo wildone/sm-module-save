@@ -63,7 +63,6 @@ class SmModuleSave {
 
       ensureV2Saved
         .then(() => {
-          console.log('v2 saved');
           if (failedSaves !== 0) {
             return Promise.reject();
           }
