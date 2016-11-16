@@ -15,19 +15,21 @@
 
       // Override Simpla, we just want it for its polyfills
       window.Simpla = {
-        getState: sinon.stub().returns({
-          token: token,
-          authenticated: authenticated,
-          editing: editing
-        }),
-        observe: sinon.stub(),
-        logout: sinon.stub(),
-        toggleEditing: sinon.stub()
-      }
+        _v1: {
+          getState: sinon.stub().returns({
+            token: token,
+            authenticated: authenticated,
+            editing: editing
+          }),
+          observe: sinon.stub(),
+          logout: sinon.stub(),
+          toggleEditing: sinon.stub()
+        }
+      };
 
       window.simpla = {
         config: {}
-      }
+      };
     </script>
 
     <!-- Import the element to test -->
@@ -52,7 +54,7 @@
         });
 
         afterEach(function() {
-          Simpla.toggleEditing.reset();
+          Simpla._v1.toggleEditing.reset();
         });
 
         it('is okay', function() {
@@ -174,12 +176,12 @@
 
         it('logout should call logout on Simpla', function() {
           component.logout();
-          expect(Simpla.logout.called).to.be.true;
+          expect(Simpla._v1.logout.called).to.be.true;
         });
 
         it('should stop editing on logout', function() {
           component.logout()
-          expect(Simpla.toggleEditing.calledWith(false)).to.be.true;
+          expect(Simpla._v1.toggleEditing.calledWith(false)).to.be.true;
         });
 
         describe('singleton', function() {
@@ -207,7 +209,7 @@
           });
 
           it('should bind authenticated to Simpla', function() {
-            var call = Simpla.observe.withArgs('authenticated').lastCall,
+            var call = Simpla._v1.observe.withArgs('authenticated').lastCall,
                 callback = call && call.args[1];
 
             expect(call).to.not.be.null;
@@ -226,7 +228,7 @@
           });
 
           it('should bind editing to Simpla', function() {
-            var call = Simpla.observe.withArgs('editing').lastCall,
+            var call = Simpla._v1.observe.withArgs('editing').lastCall,
                 callback = call && call.args[1];
 
             expect(call).to.not.be.null;
@@ -275,8 +277,8 @@
 
           it('should bind its value to Simpla', function() {
             var freshToken = token + '-fresh',
-                observing = Simpla.observe.withArgs('token').lastCall.args[0],
-                callback = Simpla.observe.withArgs('token').lastCall.args[1];
+                observing = Simpla._v1.observe.withArgs('token').lastCall.args[0],
+                callback = Simpla._v1.observe.withArgs('token').lastCall.args[1];
 
             expect(observing).to.equal('token');
             callback(freshToken);
