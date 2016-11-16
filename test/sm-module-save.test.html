@@ -6,8 +6,9 @@
     <script src="../../webcomponentsjs/webcomponents.min.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
-
+    <script src="../../simpla/simpla.js"></script>
     <link rel="import" href="../../test-fixture/test-fixture.html">
+
     <script>
       var token = 'some-token',
           authenticated = true,
@@ -15,16 +16,14 @@
 
       // Override Simpla, we just want it for its polyfills
       window.Simpla = {
-        _v1: {
-          getState: sinon.stub().returns({
-            token: token,
-            authenticated: authenticated,
-            editing: editing
-          }),
-          observe: sinon.stub(),
-          logout: sinon.stub(),
-          toggleEditing: sinon.stub()
-        }
+        getState: sinon.stub().returns({
+          token: token,
+          authenticated: authenticated,
+          editing: editing
+        }),
+        observe: sinon.stub(),
+        logout: sinon.stub(),
+        toggleEditing: sinon.stub()
       };
 
       window.simpla = {
