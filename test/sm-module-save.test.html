@@ -7,6 +7,7 @@
     <script src="../../web-component-tester/browser.js"></script>
     <script src="../../test-fixture/test-fixture-mocha.js"></script>
     <script src="../../simpla/simpla.js"></script>
+    <script src="../../es6-promise/es6-promise.auto.min.js"></script>
     <link rel="import" href="../../test-fixture/test-fixture.html">
 
     <script>
@@ -87,7 +88,7 @@
             });
           });
 
-          it('should emit "saved" once all elements have finished saving', function() {
+          it('should emit "saved" once all elements have finished saving', function(done) {
             var listener = sinon.stub();
 
             component.addEventListener('saved', listener);
@@ -101,7 +102,10 @@
                 el.dispatchEvent(new Event('saved'));
               });
 
-            expect(listener.called).to.be.true;
+            component.async(function() {
+              expect(listener.called).to.be.true;
+              done();
+            }, 1);
           });
 
           it('should be busy while saving', function() {
@@ -133,7 +137,7 @@
               component.addEventListener('save-failed', listeners.failed);
             });
 
-            it('should notify failed if all elements failed', function() {
+            it('should notify failed if all elements failed', function(done) {
               all = true;
 
               component.save();
@@ -143,8 +147,11 @@
                   el.dispatchEvent(new Event('error'));
                 });
 
-              expect(listeners.saved.called).to.be.false;
-              expect(listeners.failed.called).to.be.true;
+              component.async(function() {
+                expect(listeners.saved.called).to.be.false;
+                expect(listeners.failed.called).to.be.true;
+                done();
+              }, 1);
             });
 
             it('should stop being busy on fail', function() {
@@ -153,7 +160,7 @@
               expect(component.busy).to.be.false;
             });
 
-            it('should notify failed if some elements failed', function() {
+            it('should notify failed if some elements failed', function(done) {
               all = false;
 
               component.save();
@@ -167,8 +174,11 @@
                   }
                 });
 
-              expect(listeners.saved.called).to.be.false;
-              expect(listeners.failed.called).to.be.true;
+              component.async(function() {
+                expect(listeners.saved.called).to.be.false;
+                expect(listeners.failed.called).to.be.true;
+                done();
+              }, 1);
             });
           });
         });
@@ -282,6 +292,38 @@
             expect(observing).to.equal('token');
             callback(freshToken);
             expect(component.token).to.equal(freshToken);
+          });
+        });
+
+        describe('v2 support', function() {
+          beforeEach(function() {
+            simpla.elements = [];
+          });
+
+          afterEach(function() {
+            delete Simpla.save;
+          });
+
+          it('should call Simpla.save', function(done) {
+            Simpla.save = sinon.stub().returns(Promise.resolve());
+
+            component.save();
+
+            expect(Simpla.save.called, 'called Simpla.save').to.be.true;
+            component.addEventListener('saved', function() {
+              done();
+            });
+          });
+
+          it('should fail if Simpla.save fails', function(done) {
+            Simpla.save = sinon.stub().returns(Promise.reject());
+
+            component.save();
+
+            expect(Simpla.save.called, 'called Simpla.save').to.be.true;
+            component.addEventListener('save-failed', function() {
+              done();
+            });
           });
         });
       });

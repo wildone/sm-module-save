@@ -40,28 +40,44 @@ class SmModuleSave {
         successfulSaves = 0,
         failedSaves = 0,
         haveTriedAll = false,
-        finished;
+        triedToSave,
+        ensureV2Saved,
+        finished,
+        trySave;
 
     this.fire('saving');
+
+    // Add support for Simpla v2 SDK
+    if (Simpla.save) {
+      ensureV2Saved = Simpla.save();
+    } else {
+      ensureV2Saved = Promise.resolve();
+    }
 
     /**
      * Fires saved, if there were no fails, otherwise fires save-failed
      * @return {[type]} [description]
      */
     finished = () => {
-      if (failedSaves === 0) {
-        this.fire('saved');
-      } else {
+      let failed = () => {
         this.fire('save-failed', { all: successfulSaves === 0 });
-      }
+      };
+
+      ensureV2Saved
+        .then(() => {
+          if (failedSaves !== 0) {
+            return Promise.reject();
+          }
+
+          this.fire('saved');
+        })
+        .catch(failed);
     };
 
-    // For each element, make a save request, then keep track of the successes
-    //  of these requests, emited saved or save-failed once all requests have
-    //  come back, and the success of them is known
-    simpla.elements.forEach(element => {
+    trySave = (element) => {
       let addElement,
           removeElement,
+          willSave,
           saved = () => removeElement(true),
           failed = () => removeElement(false);
 
@@ -100,12 +116,25 @@ class SmModuleSave {
       };
 
       // Only add the element if the save request actually occurs
-      if (element.save()) {
+      willSave = element.save();
+      if (willSave) {
         addElement();
       }
-    });
+
+      return !!willSave;
+    }
+
+    // For each element, make a save request, then keep track of the successes
+    //  of these requests, emited saved or save-failed once all requests have
+    //  come back, and the success of them is known
+    triedToSave = simpla.elements.map(trySave).filter(didSave => !!didSave).length;
 
     haveTriedAll = true;
+
+    if (triedToSave === 0) {
+      // Dummy time taken to save
+      setTimeout(finished, 2000);
+    }
   }
 
   /**
