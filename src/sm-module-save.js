@@ -40,8 +40,10 @@ class SmModuleSave {
         successfulSaves = 0,
         failedSaves = 0,
         haveTriedAll = false,
+        triedToSave,
         ensureV2Saved,
-        finished;
+        finished,
+        trySave;
 
     this.fire('saving');
 
@@ -72,12 +74,10 @@ class SmModuleSave {
         .catch(failed);
     };
 
-    // For each element, make a save request, then keep track of the successes
-    //  of these requests, emited saved or save-failed once all requests have
-    //  come back, and the success of them is known
-    simpla.elements.forEach(element => {
+    trySave = (element) => {
       let addElement,
           removeElement,
+          willSave,
           saved = () => removeElement(true),
           failed = () => removeElement(false);
 
@@ -116,15 +116,24 @@ class SmModuleSave {
       };
 
       // Only add the element if the save request actually occurs
-      if (element.save()) {
+      willSave = element.save();
+      if (willSave) {
         addElement();
       }
-    });
+
+      return !!willSave;
+    }
+
+    // For each element, make a save request, then keep track of the successes
+    //  of these requests, emited saved or save-failed once all requests have
+    //  come back, and the success of them is known
+    triedToSave = simpla.elements.map(trySave).filter(didSave => !!didSave).length;
 
     haveTriedAll = true;
 
-    if (simpla.elements.length === 0) {
-      finished();
+    if (triedToSave === 0) {
+      // Dummy time taken to save
+      setTimeout(finished, 2000);
     }
   }
 
